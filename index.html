@@ -34,6 +34,7 @@
         linear-gradient(135deg, #ffe1ed, #e6ffef);
     }
 
+    /* Floating hearts background */
     .floaty{
       position:fixed;
       inset:-20vh -20vw;
@@ -115,6 +116,7 @@
     }
     button:active{ transform:scale(.97); }
 
+    /* YES button pop/jump */
     @keyframes popJump {
       0%,100%{transform:translateY(0) scale(1)}
       30%{transform:translateY(-8px) scale(1.08)}
@@ -126,7 +128,12 @@
       box-shadow:0 14px 28px rgba(255,77,136,.25);
       animation: popJump 1.4s ease-in-out infinite;
     }
+    .yes:hover{
+      transform: translateY(-4px) scale(1.10);
+      box-shadow:0 18px 36px rgba(255,77,136,.35);
+    }
 
+    /* NO button wiggle */
     @keyframes wiggle{
       0%{transform:rotate(0deg)}
       20%{transform:rotate(-2deg)}
@@ -143,7 +150,11 @@
       animation:wiggle 3s ease-in-out infinite;
       transform-origin:50% 80%;
     }
+    .no:hover{
+      animation:wiggle .6s ease-in-out infinite;
+    }
 
+    /* Reveal + gallery */
     .reveal{
       display:none;
       margin-top:22px;
@@ -162,13 +173,14 @@
       margin-top:14px;
       display:grid;
       grid-template-columns:1fr;
-      gap:14px;
+      gap:16px;
       justify-items:center;
     }
 
+    /* Vertical portrait frames, NO cropping */
     .shot{
       width:min(420px,100%);
-      aspect-ratio:3/4;
+      aspect-ratio:3 / 4;
       border-radius:18px;
       overflow:hidden;
       box-shadow:0 14px 30px rgba(0,0,0,.12);
@@ -233,13 +245,10 @@
 
       <div class="gallery">
         <div class="shot"><img src="us1.jpg" alt="Us 1"></div>
+        <div class="shot"><img src="us2.jpg" alt="Us 2"></div>
         <div class="shot"><img src="us3.jpg" alt="Us 3"></div>
       </div>
     </div>
-
-    <audio id="bgm" preload="auto">
-      <source src="Salsa.mp3" type="audio/mpeg">
-    </audio>
   </div>
 
   <script>
@@ -247,34 +256,10 @@
     const noBtn = document.getElementById("noBtn");
     const reveal = document.getElementById("reveal");
     const choices = document.getElementById("choices");
-    const bgm = document.getElementById("bgm");
-
-    let musicUnlocked = false;
-
-    async function tryPlayMusic(){
-      if (musicUnlocked) return;
-      try{
-        bgm.loop = true;
-        bgm.volume = 0.75;
-        await bgm.play();
-        musicUnlocked = true;
-      } catch {
-        // If first attempt fails, unlock on ANY next tap
-        document.addEventListener("pointerdown", unlockOnce, { once:true });
-      }
-    }
-
-    async function unlockOnce(){
-      try{
-        await bgm.play();
-        musicUnlocked = true;
-      } catch {}
-    }
 
     function showReveal(){
       choices.style.display = "none";
       reveal.style.display = "block";
-      tryPlayMusic();
       reveal.scrollIntoView({ behavior:"smooth", block:"start" });
     }
 

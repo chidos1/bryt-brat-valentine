@@ -34,6 +34,7 @@
         linear-gradient(135deg, #ffe1ed, #e6ffef);
     }
 
+    /* Floating hearts background */
     .floaty{
       position:fixed;
       inset:-20vh -20vw;
@@ -115,6 +116,7 @@
     }
     button:active{ transform:scale(.97); }
 
+    /* YES button pop/jump */
     @keyframes popJump {
       0%,100%{transform:translateY(0) scale(1)}
       30%{transform:translateY(-8px) scale(1.08)}
@@ -126,7 +128,12 @@
       box-shadow:0 14px 28px rgba(255,77,136,.25);
       animation: popJump 1.4s ease-in-out infinite;
     }
+    .yes:hover{
+      transform: translateY(-4px) scale(1.10);
+      box-shadow:0 18px 36px rgba(255,77,136,.35);
+    }
 
+    /* NO button wiggle */
     @keyframes wiggle{
       0%{transform:rotate(0deg)}
       20%{transform:rotate(-2deg)}
@@ -143,7 +150,11 @@
       animation:wiggle 3s ease-in-out infinite;
       transform-origin:50% 80%;
     }
+    .no:hover{
+      animation:wiggle .6s ease-in-out infinite;
+    }
 
+    /* Reveal + gallery */
     .reveal{
       display:none;
       margin-top:22px;
@@ -161,24 +172,38 @@
     .gallery{
       margin-top:14px;
       display:grid;
-      grid-template-columns:1fr;
-      gap:16px;
+      grid-template-columns: 1fr;
+      gap:14px;
+      justify-items:center;
     }
 
-    /* ✅ FIXED IMAGE DISPLAY */
+    /* ✅ Vertical portrait frames + NO cropping */
     .shot{
-      width:100%;
+      width: min(420px, 100%);
+      aspect-ratio: 3 / 4;          /* forces a vertical frame */
       border-radius:18px;
       overflow:hidden;
       box-shadow:0 14px 30px rgba(0,0,0,.12);
-      background:#fff;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,77,136,.10), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(47,209,122,.10), transparent 60%),
+        rgba(255,255,255,.85);
+      border:1px solid rgba(0,0,0,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .shot img{
       width:100%;
-      height:auto;            /* allows full image height */
-      object-fit:contain;     /* NO CROPPING */
+      height:100%;
+      object-fit:contain;            /* shows the entire image (no cut faces) */
       display:block;
+    }
+
+    /* Optional: slightly reduce empty bars on super-wide photos while still showing full image */
+    @media (max-width: 420px){
+      .shot{ width:100%; }
     }
   </style>
 </head>
@@ -198,7 +223,7 @@
   </svg>
 
   <div class="card">
-    <div class="badge">🌸 Pink & 💚 Green vibes but I'm not an AKA though 🚫🐸</div>
+    <div class="badge">🌸 Pink & 💚 Green vibes without the AKA 🚫🐸</div>
     <div class="heart">💖</div>
 
     <h1>Hey Bryt Brat…</h1>
@@ -232,6 +257,11 @@
         <div class="shot"><img src="us3.jpg" alt="Us 3"></div>
       </div>
     </div>
+
+    <!-- Music: auto-starts after she clicks either button -->
+    <audio id="bgm" preload="auto">
+      <source src="Salsa.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
   <script>
@@ -239,10 +269,24 @@
     const noBtn = document.getElementById("noBtn");
     const reveal = document.getElementById("reveal");
     const choices = document.getElementById("choices");
+    const bgm = document.getElementById("bgm");
+
+    async function startMusic(){
+      try{
+        bgm.loop = true;
+        bgm.volume = 0.75;
+        bgm.load();
+        await bgm.play();
+      } catch (e) {
+        // If a browser blocks it for any reason, we simply fail silently.
+        // The click still reveals the message; no extra buttons needed.
+      }
+    }
 
     function showReveal(){
       choices.style.display = "none";
       reveal.style.display = "block";
+      startMusic();
       reveal.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 

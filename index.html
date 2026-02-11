@@ -17,47 +17,48 @@
       --text:#222;
     }
 
-    *{box-sizing:border-box}
+    html, body{
+      width:100%;
+      height:auto;
+      overflow-y:auto;
+      overflow-x:hidden;
+    }
 
     body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;   /* was center */
-  padding: 24px 12px;       /* gives breathing room */
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color:var(--text);
-  overflow-x:hidden;        /* allow vertical scroll, prevent sideways */
-  overflow-y:auto;          /* enable scrolling */
-  background:
-    radial-gradient(circle at 20% 15%, var(--pink1), transparent 55%),
-    radial-gradient(circle at 80% 20%, var(--green1), transparent 55%),
-    linear-gradient(135deg, #ffe1ed, #e6ffef);
-}
+      margin:0;
+      padding:24px 12px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 15%, var(--pink1), transparent 55%),
+        radial-gradient(circle at 80% 20%, var(--green1), transparent 55%),
+        linear-gradient(135deg, #ffe1ed, #e6ffef);
+    }
 
-    /* floating hearts background */
     .floaty{
       position:fixed;
       inset:-20vh -20vw;
       pointer-events:none;
-      opacity:.55;
+      opacity:.5;
       animation: drift 18s linear infinite;
+      z-index:0;
     }
+
     @keyframes drift{
-      0%{transform: translate(0,0) rotate(0deg)}
-      100%{transform: translate(6vw, 3vh) rotate(8deg)}
+      from{transform:translate(0,0)}
+      to{transform:translate(6vw, 3vh)}
     }
 
     .card{
-      width:min(560px, 92vw);
+      max-width:560px;
+      margin:0 auto;
       background:var(--card);
       backdrop-filter: blur(10px);
       border-radius:24px;
-      padding:28px 24px 22px;
+      padding:28px 24px 26px;
       text-align:center;
       box-shadow:0 25px 70px rgba(0,0,0,.16);
-      border:1px solid rgba(47, 209, 122, .25);
+      border:1px solid rgba(47,209,122,.25);
       position:relative;
       z-index:2;
     }
@@ -68,33 +69,32 @@
       gap:8px;
       padding:8px 12px;
       border-radius:999px;
-      font-weight:650;
       font-size:13px;
+      font-weight:650;
       background: linear-gradient(135deg, rgba(255,77,136,.16), rgba(47,209,122,.16));
-      border:1px solid rgba(0,0,0,.06);
       margin-bottom:12px;
     }
 
     .heart{
       font-size:56px;
       animation:pulse 1.3s ease-in-out infinite;
-      margin-bottom:8px;
+      margin-bottom:10px;
     }
+
     @keyframes pulse{
       0%,100%{transform:scale(1)}
       50%{transform:scale(1.1)}
     }
 
     h1{
-      margin:0 0 10px;
+      margin:0 0 12px;
       font-size:clamp(28px, 4vw, 36px);
-      letter-spacing:.2px;
     }
 
     p{
-      margin:10px 0 16px;
+      margin:0 0 18px;
       font-size:16px;
-      line-height:1.45;
+      line-height:1.6;
       opacity:.92;
     }
 
@@ -103,7 +103,7 @@
       gap:14px;
       justify-content:center;
       flex-wrap:wrap;
-      margin-top:18px;
+      margin-top:10px;
     }
 
     button{
@@ -113,27 +113,24 @@
       font-size:16px;
       font-weight:700;
       cursor:pointer;
-      transition:transform .1s ease, box-shadow .2s ease, filter .2s ease;
+      transition:transform .1s ease, box-shadow .2s ease;
       user-select:none;
-      -webkit-tap-highlight-color: transparent;
     }
+
     button:active{ transform:scale(.97); }
 
     .yes{
       background: linear-gradient(135deg, var(--pink2), var(--green2));
       color:white;
-      box-shadow:0 14px 28px rgba(255,77,136,.22);
+      box-shadow:0 14px 28px rgba(255,77,136,.25);
     }
-    .yes:hover{ filter:brightness(1.02); }
 
-    /* Wiggle animation for "No" */
     @keyframes wiggle{
       0%{transform:rotate(0deg)}
-      15%{transform:rotate(-2deg)}
-      30%{transform:rotate(2deg)}
-      45%{transform:rotate(-2deg)}
-      60%{transform:rotate(2deg)}
-      75%{transform:rotate(-1deg)}
+      20%{transform:rotate(-2deg)}
+      40%{transform:rotate(2deg)}
+      60%{transform:rotate(-2deg)}
+      80%{transform:rotate(1deg)}
       100%{transform:rotate(0deg)}
     }
 
@@ -141,102 +138,72 @@
       background:white;
       color:var(--pink2);
       border:1px solid rgba(255,77,136,.35);
-      box-shadow:0 10px 22px rgba(0,0,0,.10);
-      animation: wiggle 2.8s ease-in-out infinite;
-      transform-origin: 50% 80%;
+      box-shadow:0 10px 22px rgba(0,0,0,.1);
+      animation:wiggle 3s ease-in-out infinite;
+      transform-origin:50% 80%;
     }
+
     .no:hover{
-      animation: wiggle .65s ease-in-out infinite;
+      animation:wiggle .6s ease-in-out infinite;
     }
 
-    .reveal{
-      display:none;
-      margin-top:20px;
-      padding:16px 16px 14px;
-      border-radius:18px;
-      background: linear-gradient(135deg, rgba(255,241,246,.9), rgba(232,255,241,.9));
-      border:1px dashed rgba(47,209,122,.45);
-      animation:fadeIn .6s ease forwards;
-    }
-    @keyframes fadeIn{
-      from{opacity:0; transform:translateY(8px)}
-      to{opacity:1; transform:translateY(0)}
-    }
-
-    .confetti{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      z-index:3;
-    }
-    .piece{
-      position:absolute;
-      top:-20px;
-      width:10px;
-      height:14px;
-      border-radius:3px;
-      animation:fall linear forwards;
-      opacity:.95;
-    }
-    @keyframes fall{
-      to{ transform:translateY(120vh) rotate(720deg); }
-    }
-
-    .mini{
-      font-size:13px;
-      opacity:.78;
-      margin-top:12px;
-    }
-
-    /* Music area */
     .music{
       margin-top:14px;
       display:flex;
       justify-content:center;
       gap:10px;
       flex-wrap:wrap;
-      align-items:center;
     }
-    .music button{
-      font-size:14px;
-      padding:10px 14px;
-      font-weight:750;
-    }
+
     .play{
       background: linear-gradient(135deg, var(--green3), var(--green2));
       color:white;
-      box-shadow:0 12px 24px rgba(47,209,122,.20);
+      font-weight:750;
     }
+
     .pause{
-      background:#ffffff;
+      background:white;
       color:var(--green3);
       border:1px solid rgba(47,209,122,.35);
-      box-shadow:0 10px 22px rgba(0,0,0,.08);
+      font-weight:750;
+    }
+
+    .reveal{
+      display:none;
+      margin-top:22px;
+      padding:18px;
+      border-radius:18px;
+      background: linear-gradient(135deg, rgba(255,241,246,.9), rgba(232,255,241,.9));
+      border:1px dashed rgba(47,209,122,.45);
+      animation:fadeIn .6s ease forwards;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(8px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    .mini{
+      font-size:13px;
+      opacity:.8;
+      margin-top:14px;
     }
   </style>
 </head>
 
 <body>
-  <!-- soft floating hearts background (inline SVG) -->
   <svg class="floaty" viewBox="0 0 1200 800" aria-hidden="true">
     <defs>
       <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#ff4d88" stop-opacity="0.30"/>
+        <stop offset="0" stop-color="#ff4d88" stop-opacity="0.3"/>
         <stop offset="1" stop-color="#2fd17a" stop-opacity="0.22"/>
       </linearGradient>
     </defs>
     <g fill="url(#g)">
       <path d="M150 120c-30-35-85-15-85 30 0 55 85 90 85 90s85-35 85-90c0-45-55-65-85-30z"/>
-      <path d="M470 210c-25-30-70-13-70 25 0 45 70 75 70 75s70-30 70-75c0-38-45-55-70-25z"/>
       <path d="M900 140c-35-40-100-18-100 35 0 62 100 102 100 102s100-40 100-102c0-53-65-75-100-35z"/>
-      <path d="M260 520c-28-34-80-14-80 29 0 53 80 87 80 87s80-34 80-87c0-43-52-63-80-29z"/>
-      <path d="M720 560c-28-34-80-14-80 29 0 53 80 87 80 87s80-34 80-87c0-43-52-63-80-29z"/>
-      <path d="M1030 520c-22-26-62-11-62 22 0 41 62 68 62 68s62-27 62-68c0-33-40-48-62-22z"/>
     </g>
   </svg>
-
-  <div class="confetti" id="confetti"></div>
 
   <div class="card">
     <div class="badge">🌸 Pink + 💚 Green vibes</div>
@@ -245,49 +212,34 @@
     <h1>Hey Bryt Brat…</h1>
 
     <p>
-  Quick question 😌
-</p>
+      Quick question 😌 “Are you still down to do dlong winstance?!” Oh wait — guess you can’t, because we’re already together forever 🤪. Every day since September 1st, 2023 has been challenging, refining, and deeply fulfilling, and I wouldn’t change a single moment. We’ve laughed, cried, prayed, argued, cried again, and by God’s grace and mercy somehow came out closer every time. You mean more to me than I can properly put into words, and I’m endlessly grateful for your life and for the way you push me to grow into a better man, husband, and leader. Without you, I truly wouldn’t be where I am today — and in case you didn’t hear it yet today, I love you 😘
+    </p>
 
-<hr>
-
-<p>
-  “Are you still down to do dlong winstance?!”
-  <br>
-  …oh wait guess you can’t because we’re already together forever 🤪
-  Every single day since September 1st, 2023 has been some of the most challenging yet fulfilling time I’ve spent on this Earth, and I wouldn’t change a thing.
-<hr>
-  We laughed, we cried, we prayed, we yelled, cried again — and somehow by God’s grace and mercy we became closer.
-<hr>
-  You mean so much to me. I’m truly grateful for your life and for how you grow me and push me to become a better man, husband, and leader.
-<hr>
-  Without you, I can honestly say I wouldn’t be where I am today.  
-  I promised to say it more, but in case you didn’t hear it today… I love you 😘
-  So I would totally love if you clicked one of the links below so I can hack your bank account and steal all your spend money so I can get my very own öura ring :)
-</p>
+    <p>
+      So I would totally love if you clicked the totally-not-suspicious link below that definitely does not steal your spend money so I can buy myself an Ōura ring 🙂
+    </p>
 
     <div class="buttons" id="choices">
       <button class="yes" id="yesBtn">Yes for a surprise 💘</button>
       <button class="no" id="noBtn">No, I’m a party pooper 😅</button>
     </div>
 
-    <!-- Optional music controls -->
     <div class="music">
-      <button class="play" id="playBtn" type="button">Play the vibes 🎶</button>
-      <button class="pause" id="pauseBtn" type="button">Pause</button>
+      <button class="play" id="playBtn">Play the vibes 🎶</button>
+      <button class="pause" id="pauseBtn">Pause</button>
     </div>
+
     <div class="mini">😍🕺🏾💃🏽❤️‍🔥</div>
 
     <div class="reveal" id="reveal">
       <h1>Will you be my Valentine? 💌</h1>
       <p>
-        Get street sexy for a fun night out 🌹
-        <br>
+        Get street sexy for a fun night out 🌹  
         It may or may not feature some steaminess 😉
       </p>
       <p>I love you, Brytini 💕</p>
     </div>
 
-    <!-- Replace the src with YOUR uploaded MP3 URL -->
     <audio id="bgm" preload="auto">
       <source src="Salsa.mp3" type="audio/mpeg">
     </audio>
@@ -298,7 +250,6 @@
     const noBtn = document.getElementById("noBtn");
     const reveal = document.getElementById("reveal");
     const choices = document.getElementById("choices");
-    const confetti = document.getElementById("confetti");
 
     const playBtn = document.getElementById("playBtn");
     const pauseBtn = document.getElementById("pauseBtn");
@@ -307,45 +258,18 @@
     function showReveal(){
       choices.style.display = "none";
       reveal.style.display = "block";
-      popConfetti();
-    }
-
-    function popConfetti(){
-      const colors = ["#ff4d88","#ff7aa8","#ffd1e1","#2fd17a","#e8fff1","#ffffff"];
-      for(let i=0;i<95;i++){
-        const d = document.createElement("div");
-        d.className = "piece";
-        d.style.left = Math.random()*100 + "vw";
-        d.style.background = colors[Math.floor(Math.random()*colors.length)];
-        d.style.animationDuration = (2.4 + Math.random()*2.6) + "s";
-        d.style.width = (8 + Math.random()*8) + "px";
-        d.style.height = (10 + Math.random()*10) + "px";
-        confetti.appendChild(d);
-        d.addEventListener("animationend", ()=> d.remove());
-      }
     }
 
     yesBtn.addEventListener("click", showReveal);
     noBtn.addEventListener("click", showReveal);
 
-    // Music controls
     playBtn.addEventListener("click", async () => {
-      try{
-        if (!bgm.querySelector("source")) {
-          alert("Add your MP3 link inside the <audio> tag first 🙂");
-          return;
-        }
-        bgm.loop = true;
-        bgm.volume = 0.75;
-        await bgm.play();
-      } catch (e) {
-        alert("Your browser blocked playback. Try tapping again or check the MP3 link.");
-      }
+      bgm.loop = true;
+      bgm.volume = 0.75;
+      await bgm.play();
     });
 
-    pauseBtn.addEventListener("click", () => {
-      bgm.pause();
-    });
+    pauseBtn.addEventListener("click", () => bgm.pause());
   </script>
 </body>
 </html>

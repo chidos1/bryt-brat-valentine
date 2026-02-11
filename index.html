@@ -34,7 +34,7 @@
         linear-gradient(135deg, #ffe1ed, #e6ffef);
     }
 
-    /* Floating background */
+    /* Floating hearts background */
     .floaty{
       position:fixed;
       inset:-20vh -20vw;
@@ -116,7 +116,7 @@
     }
     button:active{ transform:scale(.97); }
 
-    /* YES button pop */
+    /* YES button pop/jump */
     @keyframes popJump {
       0%,100%{transform:translateY(0) scale(1)}
       30%{transform:translateY(-8px) scale(1.08)}
@@ -154,26 +154,6 @@
       animation:wiggle .6s ease-in-out infinite;
     }
 
-    /* Music */
-    .music{
-      margin-top:14px;
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .play{
-      background: linear-gradient(135deg, var(--green3), var(--green2));
-      color:white;
-      font-weight:750;
-    }
-    .pause{
-      background:white;
-      color:var(--green3);
-      border:1px solid rgba(47,209,122,.35);
-      font-weight:750;
-    }
-
     .mini{
       font-size:13px;
       opacity:.8;
@@ -198,17 +178,14 @@
     .gallery{
       margin-top:14px;
       display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap:10px;
-    }
-    @media (max-width:420px){
-      .gallery{grid-template-columns:1fr;}
+      grid-template-columns: 1fr;
+      gap:12px;
     }
 
     .shot{
       width:100%;
-      height:180px;
-      border-radius:16px;
+      height:200px;
+      border-radius:18px;
       overflow:hidden;
       box-shadow:0 14px 30px rgba(0,0,0,.12);
     }
@@ -216,6 +193,7 @@
       width:100%;
       height:100%;
       object-fit:cover;
+      display:block;
     }
   </style>
 </head>
@@ -241,25 +219,19 @@
     <h1>Hey Bryt Brat…</h1>
 
     <p>
-      “Are you still down to do dlong winstance?!” Oh wait — guess you can’t, because we’re already together forever 🤪.
+      “Are you still down to do dlong winstance?!” Oh wait guess you can’t, because we’re already together forever 🤪.
       Every day since September 1st, 2023 has been challenging, refining, and deeply fulfilling, and I wouldn’t change a single moment.
       We’ve laughed, cried, prayed, argued, cried again and by God’s grace and mercy came out closer every time.
-      You mean more to me than I can put into words, and I’m grateful for your life and how you push me to be a better man, husband, and leader.
-      In case you didn’t hear it today… I love you 😘
+      You mean more to me than I can put into words, and in case you didn’t hear it today… I love you 😘
     </p>
 
     <p>
-      So I would totally love if you clicked the totally not suspicious link below that definitely does not steal your spend money so I can buy myself an Ōura ring 🙊
+      So I would totally love if you clicked the totally not suspicious link below that definitely does not steal your spend money so I can buy myself an Ōura ring 🙂
     </p>
 
     <div class="buttons" id="choices">
-      <button class="yes" id="yesBtn">Yes for a surprise 💘</button>
-      <button class="no" id="noBtn">No, I’m a party pooper 😅</button>
-    </div>
-
-    <div class="music">
-      <button class="play" id="playBtn">Play the vibes 🎶</button>
-      <button class="pause" id="pauseBtn">Pause</button>
+      <button class="yes" id="yesBtn">Give him money your money for the ring 💍 </button>
+      <button class="no" id="noBtn">Give him 🍆👅💦😜 7 times this weekend 😏 </button>
     </div>
 
     <div class="mini">😍🕺🏾💃🏽❤️‍🔥</div>
@@ -274,14 +246,9 @@
 
       <div class="gallery">
         <div class="shot"><img src="us1.jpg" alt="Us 1"></div>
-        <div class="shot"><img src="us2.jpg" alt="Us 2"></div>
         <div class="shot"><img src="us3.jpg" alt="Us 3"></div>
       </div>
     </div>
-
-    <audio id="bgm" preload="auto">
-      <source src="Salsa.mp3" type="audio/mpeg">
-    </audio>
   </div>
 
   <script>
@@ -289,10 +256,6 @@
     const noBtn = document.getElementById("noBtn");
     const reveal = document.getElementById("reveal");
     const choices = document.getElementById("choices");
-
-    const playBtn = document.getElementById("playBtn");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const bgm = document.getElementById("bgm");
 
     function showReveal(){
       choices.style.display = "none";
@@ -302,15 +265,6 @@
 
     yesBtn.addEventListener("click", showReveal);
     noBtn.addEventListener("click", showReveal);
-
-    playBtn.addEventListener("click", async () => {
-      bgm.loop = true;
-      bgm.volume = 0.75;
-      bgm.load();
-      await bgm.play();
-    });
-
-    pauseBtn.addEventListener("click", () => bgm.pause());
   </script>
 </body>
 </html>

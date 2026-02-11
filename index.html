@@ -9,7 +9,6 @@
     :root{
       --pink1:#fff1f6;
       --pink2:#ff4d88;
-      --pink3:#ff7aa8;
       --green1:#e8fff1;
       --green2:#2fd17a;
       --green3:#1aa85f;
@@ -35,6 +34,7 @@
         linear-gradient(135deg, #ffe1ed, #e6ffef);
     }
 
+    /* Floating background */
     .floaty{
       position:fixed;
       inset:-20vh -20vw;
@@ -43,7 +43,6 @@
       animation: drift 18s linear infinite;
       z-index:0;
     }
-
     @keyframes drift{
       from{transform:translate(0,0)}
       to{transform:translate(6vw, 3vh)}
@@ -80,7 +79,6 @@
       animation:pulse 1.3s ease-in-out infinite;
       margin-bottom:10px;
     }
-
     @keyframes pulse{
       0%,100%{transform:scale(1)}
       50%{transform:scale(1.1)}
@@ -116,15 +114,26 @@
       transition:transform .1s ease, box-shadow .2s ease;
       user-select:none;
     }
-
     button:active{ transform:scale(.97); }
 
+    /* YES button pop */
+    @keyframes popJump {
+      0%,100%{transform:translateY(0) scale(1)}
+      30%{transform:translateY(-8px) scale(1.08)}
+      55%{transform:translateY(0) scale(1.02)}
+    }
     .yes{
       background: linear-gradient(135deg, var(--pink2), var(--green2));
       color:white;
       box-shadow:0 14px 28px rgba(255,77,136,.25);
+      animation: popJump 1.4s ease-in-out infinite;
+    }
+    .yes:hover{
+      transform: translateY(-4px) scale(1.10);
+      box-shadow:0 18px 36px rgba(255,77,136,.35);
     }
 
+    /* NO button wiggle */
     @keyframes wiggle{
       0%{transform:rotate(0deg)}
       20%{transform:rotate(-2deg)}
@@ -133,7 +142,6 @@
       80%{transform:rotate(1deg)}
       100%{transform:rotate(0deg)}
     }
-
     .no{
       background:white;
       color:var(--pink2);
@@ -142,11 +150,11 @@
       animation:wiggle 3s ease-in-out infinite;
       transform-origin:50% 80%;
     }
-
     .no:hover{
       animation:wiggle .6s ease-in-out infinite;
     }
 
+    /* Music */
     .music{
       margin-top:14px;
       display:flex;
@@ -154,13 +162,11 @@
       gap:10px;
       flex-wrap:wrap;
     }
-
     .play{
       background: linear-gradient(135deg, var(--green3), var(--green2));
       color:white;
       font-weight:750;
     }
-
     .pause{
       background:white;
       color:var(--green3);
@@ -168,6 +174,13 @@
       font-weight:750;
     }
 
+    .mini{
+      font-size:13px;
+      opacity:.8;
+      margin-top:14px;
+    }
+
+    /* Reveal + gallery */
     .reveal{
       display:none;
       margin-top:22px;
@@ -177,16 +190,32 @@
       border:1px dashed rgba(47,209,122,.45);
       animation:fadeIn .6s ease forwards;
     }
-
     @keyframes fadeIn{
       from{opacity:0; transform:translateY(8px)}
       to{opacity:1; transform:translateY(0)}
     }
 
-    .mini{
-      font-size:13px;
-      opacity:.8;
+    .gallery{
       margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px;
+    }
+    @media (max-width:420px){
+      .gallery{grid-template-columns:1fr;}
+    }
+
+    .shot{
+      width:100%;
+      height:180px;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 14px 30px rgba(0,0,0,.12);
+    }
+    .shot img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
   </style>
 </head>
@@ -212,16 +241,20 @@
     <h1>Hey Bryt Brat…</h1>
 
     <p>
-      “Are you still down to do dlong winstance?!” Oh wait. guess you can’t, because we’re already together forever 😝. Every day since September 1st, 2023 has been challenging, refining, and deeply fulfilling, and I wouldn’t change a single moment. We’ve laughed, cried, prayed, argued, cried again, and by God’s grace and mercy somehow came out closer every time. You mean more to me than I can properly put into words, and I’m endlessly grateful for your life and for the way you push me to grow into a better man, husband, and leader. Without you, I truly wouldn’t be where I am today — and in case you didn’t hear it yet today, I love you 😘
+      Quick question 😌 “Are you still down to do dlong winstance?!” Oh wait — guess you can’t, because we’re already together forever 🤪.
+      Every day since September 1st, 2023 has been challenging, refining, and deeply fulfilling, and I wouldn’t change a single moment.
+      We’ve laughed, cried, prayed, argued, cried again — and by God’s grace and mercy came out closer every time.
+      You mean more to me than I can put into words, and I’m grateful for your life and how you push me to be a better man, husband, and leader.
+      In case you didn’t hear it today… I love you 😘
     </p>
 
     <p>
-      So I would totally love if you clicked the totally not suspicious link below that definitely does not steal your spend money so I can buy myself an Ōura ring 🙂.
+      So I would totally love if you clicked the totally-not-suspicious link below that definitely does not steal your spend money so I can buy myself an Ōura ring 🙂
     </p>
 
     <div class="buttons" id="choices">
-      <button class="yes" id="yesBtn">Get your husband the öura ring</button>
-      <button class="no" id="noBtn">Give him 🍆👅💦😩 7 times this weekend 😜😏</button>
+      <button class="yes" id="yesBtn">Yes for a surprise 💘</button>
+      <button class="no" id="noBtn">No, I’m a party pooper 😅</button>
     </div>
 
     <div class="music">
@@ -234,10 +267,16 @@
     <div class="reveal" id="reveal">
       <h1>Will you be my Valentine? 💌</h1>
       <p>
-        Get street sexy for a fun night out 🌹  
+        Get street sexy for a fun night out 🌹<br>
         It may or may not feature some steaminess 😉
       </p>
       <p>I love you, Brytini 💕</p>
+
+      <div class="gallery">
+        <div class="shot"><img src="us1.jpg" alt="Us 1"></div>
+        <div class="shot"><img src="us2.jpg" alt="Us 2"></div>
+        <div class="shot"><img src="us3.jpg" alt="Us 3"></div>
+      </div>
     </div>
 
     <audio id="bgm" preload="auto">
@@ -258,6 +297,7 @@
     function showReveal(){
       choices.style.display = "none";
       reveal.style.display = "block";
+      reveal.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     yesBtn.addEventListener("click", showReveal);
@@ -266,6 +306,7 @@
     playBtn.addEventListener("click", async () => {
       bgm.loop = true;
       bgm.volume = 0.75;
+      bgm.load();
       await bgm.play();
     });
 

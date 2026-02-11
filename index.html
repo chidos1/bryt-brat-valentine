@@ -169,7 +169,7 @@
       to{opacity:1; transform:translateY(0)}
     }
 
-    .gallery{
+   .gallery{
       margin-top:14px;
       display:grid;
       grid-template-columns:1fr;
@@ -177,25 +177,36 @@
       justify-items:center;
     }
 
-    /* Vertical portrait frames, NO cropping */
+    /* This forces every photo into the same vertical “card” */
     .shot{
       width:min(420px,100%);
       aspect-ratio:3 / 4;
       border-radius:18px;
       overflow:hidden;
       box-shadow:0 14px 30px rgba(0,0,0,.12);
-      background:rgba(255,255,255,.85);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,77,136,.10), transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(47,209,122,.10), transparent 60%),
+        rgba(255,255,255,.85);
+      border:1px solid rgba(0,0,0,.06);
       display:flex;
       align-items:center;
       justify-content:center;
     }
 
+    /* contain = no cropping; all faces stay visible */
     .shot img{
       width:100%;
       height:100%;
       object-fit:contain;
       display:block;
     }
+/* If an image fails to load, this keeps spacing consistent */
+    .shot::before{
+      content:"";
+      display:block;
+    }
+    
   </style>
 </head>
 
@@ -246,8 +257,8 @@
       <div class="gallery">
         <div class="shot"><img src="us1.jpg" alt="Us 1"></div>
         <div class="shot"><img src="us2.jpg" alt="Us 2"></div>
-        <div class=shot"><img src="us4.jpg" alt="Us 4"></div>
         <div class="shot"><img src="us3.jpg" alt="Us 3"></div>
+        <div class=shot"><img src="us4.jpg" alt="Us 4"></div>
       </div>
     </div>
   </div>
